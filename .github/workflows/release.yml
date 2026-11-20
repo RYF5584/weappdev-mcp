@@ -1,0 +1,119 @@
+name: release
+
+# Publishes the npm package and then the MCP Registry entry.
+#
+#   git tag v1.0.0 && git push origin v1.0.0
+#
+# Authentication (NPM_TOKEN flow):
+#   1. npmjs.com -> avatar -> Access Tokens -> Generate New Token -> Classic Token,
+#      type **Automation**, name NPM_TOKEN. Copy it.
+#   2. GitHub repo -> Settings -> Secrets and variables -> Actions ->
+#      New repository secret: name NPM_TOKEN, value = the token.
+#   3. Done. Every `v*` tag below publishes automatically.
+#
+# (Alternative once the package exists: OIDC "Trusted Publishing" at
+#  https://www.npmjs.com/package/weappdev-mcp/access — then NPM_TOKEN is optional.)
+# * MCP Registry — `mcp-publisher login github-oidc` (no secret needed).
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run everything but skip the actual publish'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write        # required for npm provenance and MCP Registry OIDC
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.1
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      # 1. Everything the CI job checks, so a broken tag cannot be published.
+      - name: Syntax check
+        run: npm run check
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Validate server.json
+        run: node scripts/validate-server-json.mjs
+
+      # 2. The tag decides the version: refuse to publish a mismatched tag.
+      - name: Verify tag matches package.json
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          set -euo pipefail
+          pkg_version=$(node -p "require('./package.json').version")
+          tag_version="${GITHUB_REF_NAME#v}"
+          if [ "$pkg_version" != "$tag_version" ]; then
+            echo "::error::tag v${tag_version} does not match package.json ${pkg_version}"
+            exit 1
+          fi
+          echo "version ${pkg_version} confirmed"
+
+      # 3. Inspect the tarball before publishing it.
+      - name: Pack dry-run
+        run: npm pack --dry-run
+
+      # 4. Publish the package. Provenance requires the id-token permission above.
+      - name: Publish to npm
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run == false
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # 5. Publish registry metadata (only after the package exists on npm).
+      - name: Install cosign
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run == false
+        uses: sigstore/cosign-installer@v3
+
+      - name: Download and verify mcp-publisher
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run == false
+        run: |
+          set -euo pipefail
+          os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          arch="$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')"
+          archive="mcp-publisher_${os}_${arch}.tar.gz"
+          base="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}"
+          curl --fail --location --silent --show-error --output "$archive" "$base/$archive"
+          curl --fail --location --silent --show-error --output "$archive.sigstore.json" "$base/$archive.sigstore.json"
+          cosign verify-blob \
+            --bundle "$archive.sigstore.json" \
+            --certificate-identity "https://github.com/modelcontextprotocol/registry/.github/workflows/release.yml@refs/tags/${MCP_PUBLISHER_VERSION}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            "$archive"
+          tar xzf "$archive" mcp-publisher
+          rm -f "$archive" "$archive.sigstore.json"
+
+      - name: Authenticate to the MCP Registry
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run == false
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to the MCP Registry
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.dry_run == false
+        run: ./mcp-publisher publish
+
+      # 6. Create the GitHub Release with the tarball attached, so users can also
+      #    install straight from a file without npm.
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: weappdev-mcp-*.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

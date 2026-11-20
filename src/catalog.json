@@ -1,0 +1,389 @@
+{
+  "$schema": "./catalog.schema.json",
+  "tools": [
+    {
+      "name": "wad_status",
+      "group": "core",
+      "since": 1,
+      "title": "WeAppDev status overview"
+    },
+    {
+      "name": "wad_capabilities",
+      "group": "core",
+      "since": 1,
+      "title": "Capabilities and tool search"
+    },
+    {
+      "name": "wad_help",
+      "group": "core",
+      "since": 1,
+      "title": "Help and recipes"
+    },
+    {
+      "name": "wad_list_apps",
+      "group": "core",
+      "since": 1,
+      "title": "List running mini programs"
+    },
+    {
+      "name": "wad_open_app",
+      "group": "core",
+      "since": 1,
+      "title": "Open a mini program"
+    },
+    {
+      "name": "wad_close_app",
+      "group": "core",
+      "since": 1,
+      "title": "Close a mini program"
+    },
+    {
+      "name": "wad_list_recent",
+      "group": "core",
+      "since": 1,
+      "title": "List recently used mini programs"
+    },
+    {
+      "name": "wad_search_apps",
+      "group": "core",
+      "since": 1,
+      "title": "Search mini programs (local index)"
+    },
+    {
+      "name": "wad_list_accounts",
+      "group": "core",
+      "since": 1,
+      "title": "List accounts"
+    },
+    {
+      "name": "wad_switch_account",
+      "group": "core",
+      "since": 1,
+      "title": "Switch account"
+    },
+    {
+      "name": "wad_login_start",
+      "group": "core",
+      "since": 1,
+      "title": "Start QR login"
+    },
+    {
+      "name": "wad_login_poll",
+      "group": "core",
+      "since": 1,
+      "title": "Poll QR login"
+    },
+    {
+      "name": "wad_get_settings",
+      "group": "core",
+      "since": 1,
+      "title": "Get settings"
+    },
+    {
+      "name": "wad_set_settings",
+      "group": "core",
+      "since": 1,
+      "title": "Set settings"
+    },
+    {
+      "name": "wad_list_plugins",
+      "group": "core",
+      "since": 1,
+      "title": "List plugins"
+    },
+    {
+      "name": "wad_install_plugin",
+      "group": "core",
+      "since": 1,
+      "title": "Install plugin"
+    },
+    {
+      "name": "wad_take_snapshot",
+      "group": "core",
+      "since": 1,
+      "title": "Take a snapshot"
+    },
+    {
+      "name": "wad_click",
+      "group": "core",
+      "since": 1,
+      "title": "Click an element"
+    },
+    {
+      "name": "wad_fill",
+      "group": "core",
+      "since": 1,
+      "title": "Fill an input"
+    },
+    {
+      "name": "wad_evaluate_script",
+      "group": "core",
+      "since": 1,
+      "title": "Evaluate JS"
+    },
+    {
+      "name": "wad_take_screenshot",
+      "group": "core",
+      "since": 1,
+      "title": "Take a screenshot"
+    },
+    {
+      "name": "wad_list_network_requests",
+      "group": "core",
+      "since": 1,
+      "title": "List network requests"
+    },
+    {
+      "name": "wad_get_network_request",
+      "group": "core",
+      "since": 1,
+      "title": "Get a network request"
+    },
+    {
+      "name": "wad_list_console_messages",
+      "group": "core",
+      "since": 1,
+      "title": "List console messages"
+    },
+    {
+      "name": "wad_wait_for",
+      "group": "core",
+      "since": 1,
+      "title": "Wait for a condition"
+    },
+    {
+      "name": "wad_batch",
+      "group": "core",
+      "since": 1,
+      "title": "Run tool calls in order"
+    },
+    {
+      "name": "wad_api",
+      "group": "core",
+      "since": 1,
+      "title": "Call any /v1 endpoint"
+    },
+    {
+      "name": "wad_list_scripts",
+      "group": "reverse",
+      "since": 1,
+      "title": "List loaded scripts"
+    },
+    {
+      "name": "wad_get_script_source",
+      "group": "reverse",
+      "since": 1,
+      "title": "Get script source"
+    },
+    {
+      "name": "wad_save_script_source",
+      "group": "reverse",
+      "since": 1,
+      "title": "Save script source"
+    },
+    {
+      "name": "wad_search_scripts",
+      "group": "reverse",
+      "since": 1,
+      "title": "Search scripts"
+    },
+    {
+      "name": "wad_find_api_usage",
+      "group": "reverse",
+      "since": 1,
+      "title": "Find mini-program API usage"
+    },
+    {
+      "name": "wad_set_breakpoint_on_text",
+      "group": "reverse",
+      "since": 1,
+      "title": "Breakpoint on code text"
+    },
+    {
+      "name": "wad_break_on_xhr",
+      "group": "reverse",
+      "since": 1,
+      "title": "Break on XHR/fetch URL"
+    },
+    {
+      "name": "wad_list_breakpoints",
+      "group": "reverse",
+      "since": 1,
+      "title": "List breakpoints"
+    },
+    {
+      "name": "wad_remove_breakpoint",
+      "group": "reverse",
+      "since": 1,
+      "title": "Remove breakpoint"
+    },
+    {
+      "name": "wad_pause_or_resume",
+      "group": "reverse",
+      "since": 1,
+      "title": "Pause or resume"
+    },
+    {
+      "name": "wad_step",
+      "group": "reverse",
+      "since": 1,
+      "title": "Step execution"
+    },
+    {
+      "name": "wad_get_paused_info",
+      "group": "reverse",
+      "since": 1,
+      "title": "Get paused info"
+    },
+    {
+      "name": "wad_get_request_initiator",
+      "group": "reverse",
+      "since": 1,
+      "title": "Get request initiator"
+    },
+    {
+      "name": "wad_get_websocket_messages",
+      "group": "reverse",
+      "since": 1,
+      "title": "Get WebSocket messages"
+    },
+    {
+      "name": "wad_ws",
+      "group": "reverse",
+      "since": 1,
+      "title": "WebSocket control"
+    },
+    {
+      "name": "wad_hooks",
+      "group": "reverse",
+      "since": 1,
+      "title": "Persistent hooks"
+    },
+    {
+      "name": "wad_debug",
+      "group": "debug",
+      "since": 1,
+      "title": "Advanced debugger"
+    },
+    {
+      "name": "wad_dom",
+      "group": "render",
+      "since": 1,
+      "title": "DOM inspection"
+    },
+    {
+      "name": "wad_interact",
+      "group": "render",
+      "since": 1,
+      "title": "DOM interactions"
+    },
+    {
+      "name": "wad_network",
+      "group": "network",
+      "since": 1,
+      "title": "Network tools"
+    },
+    {
+      "name": "wad_cloud",
+      "group": "cloud",
+      "since": 1,
+      "title": "Cloud dev tools"
+    },
+    {
+      "name": "wad_http",
+      "group": "network",
+      "since": 1,
+      "title": "Send HTTP via mini program"
+    },
+    {
+      "name": "wad_native",
+      "group": "native",
+      "since": 1,
+      "title": "Native JSAPI tools"
+    },
+    {
+      "name": "wad_capture",
+      "group": "native",
+      "since": 1,
+      "title": "Capture status"
+    },
+    {
+      "name": "wad_plugin",
+      "group": "plugins",
+      "since": 1,
+      "title": "Plugin tools"
+    },
+    {
+      "name": "wad_files",
+      "group": "files",
+      "since": 1,
+      "title": "File tree and read"
+    },
+    {
+      "name": "wad_storage",
+      "group": "files",
+      "since": 1,
+      "title": "Mini-program storage"
+    },
+    {
+      "name": "wad_events",
+      "group": "files",
+      "since": 1,
+      "title": "Event stream"
+    },
+    {
+      "name": "wad_account",
+      "group": "account",
+      "since": 1,
+      "title": "Account tools"
+    },
+    {
+      "name": "wad_app",
+      "group": "app",
+      "since": 1,
+      "title": "App tools"
+    },
+    {
+      "name": "wad_cdp",
+      "group": "cdp",
+      "since": 1,
+      "title": "Raw CDP"
+    },
+    {
+      "name": "wad_tools",
+      "group": "core",
+      "since": 2,
+      "title": "Introspect and call tools by name"
+    },
+    {
+      "name": "wad_injected",
+      "group": "reverse",
+      "since": 100,
+      "title": "Injected monkey-patch registry"
+    },
+    {
+      "name": "wad_ilink",
+      "group": "cloud",
+      "since": 100,
+      "title": "Native protocol calls (/ilink)"
+    },
+    {
+      "name": "wad_rewrite",
+      "group": "network",
+      "since": 100,
+      "title": "Network rewrite rules"
+    },
+    {
+      "name": "wad_rewrite_scripts",
+      "group": "network",
+      "since": 100,
+      "title": "Network rewrite scripts"
+    },
+    {
+      "name": "wad_cloud_scripts",
+      "group": "cloud",
+      "since": 100,
+      "title": "Cloud rewrite scripts"
+    }
+  ]
+}

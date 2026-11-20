@@ -1,0 +1,64 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.RYF5584/weappdev",
+  "title": "WeAppDev",
+  "description": "Drive one or many Android phones over a single MCP config (USB, emulator, or LAN).",
+  "version": "1.0.0",
+  "websiteUrl": "https://github.com/RYF5584/weappdev-mcp",
+  "repository": {
+    "url": "https://github.com/RYF5584/weappdev-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@ryf5584/weappdev-mcp",
+      "version": "1.0.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "ADB_BIN",
+          "description": "Path to the adb binary. Defaults to `adb` on PATH.",
+          "isRequired": false,
+          "format": "string"
+        }
+      ],
+      "packageArguments": [
+        {
+          "type": "named",
+          "name": "--scan",
+          "description": "Also scan the local /24 for gateway ports 9400-9411.",
+          "isRequired": false
+        },
+        {
+          "type": "named",
+          "name": "--no-mdns",
+          "description": "Disable mDNS discovery.",
+          "isRequired": false
+        },
+        {
+          "type": "named",
+          "name": "--no-seed",
+          "description": "Ignore ~/.weappdev/devices.json.",
+          "isRequired": false
+        },
+        {
+          "type": "named",
+          "name": "--no-usb",
+          "description": "Disable adb-based discovery.",
+          "isRequired": false
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "tool": "weappdev",
+      "version": "1.0.0"
+    }
+  }
+}

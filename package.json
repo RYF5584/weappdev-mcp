@@ -1,0 +1,55 @@
+{
+  "name": "@ryf5584/weappdev-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for WeAppDev: drive one or many Android phones over a single MCP config.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "weappdev",
+    "wechat",
+    "miniprogram",
+    "android",
+    "adb",
+    "devtools"
+  ],
+  "homepage": "https://github.com/RYF5584/weappdev-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/RYF5584/weappdev-mcp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RYF5584/weappdev-mcp.git"
+  },
+  "license": "MIT",
+  "author": "RSCompanyCEO",
+  "type": "module",
+  "bin": {
+    "weappdev-mcp": "src/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/cli.mjs",
+    "./catalog": "./src/catalog.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src/*.mjs",
+    "src/catalog.json",
+    "src/catalog.schema.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "mcpName": "io.github.RYF5584/weappdev",
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "check": "node --check src/cli.mjs && node --check src/device.mjs && node --check src/discover.mjs && node --check src/capabilities.mjs && node --check src/tools.mjs && node --check src/jsonrpc.mjs && node --check src/version.mjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
